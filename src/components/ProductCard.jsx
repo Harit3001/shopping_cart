@@ -30,7 +30,7 @@ export default function ProductCard({ product, addToCart }) {
         <Rating rating={product.rating} />
       </div>
 
-      <h4>${product.price}</h4>
+      <h4>${product.price.toLocaleString()}</h4>
 
       <button onClick={() => addToCart(product)}>Add to Cart</button>
     </div>

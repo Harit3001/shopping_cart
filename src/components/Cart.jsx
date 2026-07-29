@@ -5,33 +5,52 @@ export default function Cart({
   increaseQuantity,
   decreaseQuantity,
   removeItem,
+  openCheckout,
 }) {
   const totalPrice = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
 
+  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <div className="cart">
       <h2>🛒 Shopping Cart</h2>
 
       {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <div className="empty-cart">
+          <p>Your cart is empty.</p>
+        </div>
       ) : (
         <>
-          {cart.map((item) => (
-            <CartItem
-              key={item.id}
-              item={item}
-              increaseQuantity={increaseQuantity}
-              decreaseQuantity={decreaseQuantity}
-              removeItem={removeItem}
-            />
-          ))}
+          <div className="cart-list">
+            {cart.map((item) => (
+              <CartItem
+                key={item.id}
+                item={item}
+                increaseQuantity={increaseQuantity}
+                decreaseQuantity={decreaseQuantity}
+                removeItem={removeItem}
+              />
+            ))}
+          </div>
 
-          <hr />
+          <div className="cart-summary">
+            <div className="summary-row">
+              <span>Total Items</span>
+              <strong>{totalQuantity}</strong>
+            </div>
 
-          <h3 className="cart-total">Total: ${totalPrice.toFixed(2)}</h3>
+            <div className="summary-row">
+              <span>Total Price</span>
+              <strong className="cart-total">${totalPrice.toFixed(2)}</strong>
+            </div>
+
+            <button className="checkout-btn" onClick={openCheckout}>
+              🛍️ Đặt hàng
+            </button>
+          </div>
         </>
       )}
     </div>

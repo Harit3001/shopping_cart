@@ -24,7 +24,7 @@ export default function Header({ keyword, setKeyword, cart, toggleCart }) {
         </div>
 
         <button className="cart-btn" onClick={toggleCart}>
-          🛒 {cart.length}
+          🛒 {cart.reduce((sum, item) => sum + item.quantity, 0)}
         </button>
       </div>
     </header>
