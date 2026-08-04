@@ -1,10 +1,9 @@
-import ProductCard from "./ProductCard.jsx";
-
-export default function ProductList({ products, addToCart }) {
+import ProductCard from "./ProductCard";
+export default function ProductList({ products = [] }) {
   return (
     <div className="product-list">
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} addToCart={addToCart} />
+        <ProductCard key={product.id} product={product} />
       ))}
     </div>
   );

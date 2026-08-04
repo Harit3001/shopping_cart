@@ -1,0 +1,74 @@
+/* =====================================================
+   SUCCESS PAGE
+===================================================== */
+
+.success-page {
+  min-height: 80vh;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 40px;
+}
+
+.success-card {
+  width: 100%;
+  max-width: 520px;
+
+  background: #fff;
+
+  border-radius: 20px;
+
+  padding: 50px;
+
+  text-align: center;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+.success-icon {
+  font-size: 90px;
+
+  color: #22c55e;
+
+  margin-bottom: 25px;
+}
+
+.success-card h1 {
+  margin-bottom: 20px;
+
+  font-size: 38px;
+}
+
+.success-card p {
+  color: #666;
+
+  line-height: 1.8;
+
+  margin-bottom: 35px;
+}
+
+.success-card button {
+  width: 230px;
+
+  height: 55px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #0f172a;
+
+  color: white;
+
+  font-size: 17px;
+
+  cursor: pointer;
+}
+
+.success-card button:hover {
+  background: #2563eb;
+}

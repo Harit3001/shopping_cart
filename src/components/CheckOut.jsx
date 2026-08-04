@@ -1,132 +1,132 @@
 import { useState } from "react";
 
-export default function CheckOut({ cart, totalPrice, handleOrder }) {
-  const [customer, setCustomer] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    address: "",
-    note: "",
-  });
+export default function CheckOut({ cart, totalPrice, onSubmit, onCancel }) {
+  const [errors, setErrors] = useState({});
 
-  function handleChange(e) {
-    const { name, value } = e.target;
+  function validate(form) {
+    const errors = {};
 
-    setCustomer((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (form.name.value.trim().length < 2) {
+      errors.name = "Please enter your name.";
+    }
+
+    if (!/^0\d{9}$/.test(form.phone.value)) {
+      errors.phone = "Invalid phone number.";
+    }
+
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(form.email.value)) {
+      errors.email = "Invalid email.";
+    }
+
+    if (form.address.value.trim().length < 5) {
+      errors.address = "Please enter your address.";
+    }
+
+    return errors;
   }
 
-  function submitOrder(e) {
+  function handleSubmit(e) {
     e.preventDefault();
 
-    // Validation
-    if (!customer.name.trim()) {
-      alert("Vui lòng nhập họ tên");
+    const errors = validate(e.target);
+
+    if (Object.keys(errors).length) {
+      setErrors(errors);
       return;
     }
 
-    if (!customer.phone.trim()) {
-      alert("Vui lòng nhập số điện thoại");
-      return;
-    }
+    setErrors({});
 
-    if (!customer.email.trim()) {
-      alert("Vui lòng nhập email");
-      return;
-    }
-
-    if (!customer.address.trim()) {
-      alert("Vui lòng nhập địa chỉ");
-      return;
-    }
-
-    if (cart.length === 0) {
-      alert("Giỏ hàng đang trống");
-      return;
-    }
-
-    handleOrder(customer);
+    onSubmit({
+      name: e.target.name.value,
+      phone: e.target.phone.value,
+      email: e.target.email.value,
+      address: e.target.address.value,
+      note: e.target.note.value,
+    });
   }
 
   return (
-    <div className="checkout">
-      <h1>Thông tin khách hàng</h1>
+    <section className="checkout-page">
+      <form className="checkout-grid" onSubmit={handleSubmit}>
+        {/* LEFT */}
 
-      <form onSubmit={submitOrder}>
-        <div>
-          <label>Họ và tên</label>
-          <input
-            type="text"
-            name="name"
-            value={customer.name}
-            onChange={handleChange}
-            placeholder="Nhập họ tên"
-          />
-        </div>
+        <div className="checkout-form">
+          <h1>Checkout</h1>
 
-        <div>
-          <label>Số điện thoại</label>
-          <input
-            type="tel"
-            name="phone"
-            value={customer.phone}
-            onChange={handleChange}
-            placeholder="Nhập số điện thoại"
-          />
-        </div>
+          <div className="form-group">
+            <label>Full Name</label>
 
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={customer.email}
-            onChange={handleChange}
-            placeholder="Nhập email"
-          />
-        </div>
+            <input name="name" type="text" />
 
-        <div>
-          <label>Địa chỉ</label>
-          <input
-            type="text"
-            name="address"
-            value={customer.address}
-            onChange={handleChange}
-            placeholder="Nhập địa chỉ"
-          />
-        </div>
-
-        <div>
-          <label>Ghi chú</label>
-          <textarea
-            name="note"
-            value={customer.note}
-            onChange={handleChange}
-            placeholder="Ghi chú cho đơn hàng"
-          />
-        </div>
-
-        <hr />
-
-        <h2>Sản phẩm đã chọn</h2>
-
-        {cart.map((item) => (
-          <div key={item.id}>
-            <p>
-              {item.name}x {item.quantity}
-            </p>
-
-            <span>${item.price * item.quantity}</span>
+            {errors.name && <span className="error">{errors.name}</span>}
           </div>
-        ))}
 
-        <h2>Tổng tiền: ${totalPrice}</h2>
+          <div className="form-group">
+            <label>Phone</label>
 
-        <button type="submit">Xác nhận đặt hàng</button>
+            <input name="phone" type="text" />
+
+            {errors.phone && <span className="error">{errors.phone}</span>}
+          </div>
+
+          <div className="form-group">
+            <label>Email</label>
+
+            <input name="email" type="text" />
+
+            {errors.email && <span className="error">{errors.email}</span>}
+          </div>
+
+          <div className="form-group">
+            <label>Address</label>
+
+            <input name="address" type="text" />
+
+            {errors.address && <span className="error">{errors.address}</span>}
+          </div>
+
+          <div className="form-group">
+            <label>Note</label>
+
+            <textarea rows="5" name="note" />
+          </div>
+        </div>
+
+        {/* RIGHT */}
+
+        <aside className="checkout-summary">
+          <h2>Order Summary</h2>
+
+          {cart.map((item) => (
+            <div className="summary-item" key={item.id}>
+              <img src={item.image} alt={item.name} />
+
+              <div>
+                <h4>{item.name}</h4>
+
+                <p>Qty: {item.quantity}</p>
+              </div>
+
+              <strong>${(item.quantity * item.price).toFixed(2)}</strong>
+            </div>
+          ))}
+
+          <hr />
+
+          <div className="summary-total">
+            <span>Total</span>
+
+            <strong>${totalPrice.toFixed(2)}</strong>
+          </div>
+
+          <button type="submit">Place Order</button>
+
+          <button type="button" className="cancel-btn" onClick={onCancel}>
+            Back To Cart
+          </button>
+        </aside>
       </form>
-    </div>
+    </section>
   );
 }

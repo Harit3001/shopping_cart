@@ -1,11 +1,15 @@
-export default function Search({ keyword, setKeyword }) {
+import { useState } from "react";
+
+export default function Search() {
+  const [keyword, setKeyword] = useState("");
+
   return (
-    <div className="search">
+    <div className="header-search">
       <input
         type="text"
-        placeholder="Search product..."
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
+        placeholder="Search..."
       />
     </div>
   );

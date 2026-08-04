@@ -1,17 +1,24 @@
-export default function OrderSuccess({ order, onContinue }) {
+import { FaCheckCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
+export default function OrderSuccess() {
+  const navigate = useNavigate();
+
   return (
-    <div className="order-success">
-      <div className="success-icon">🎉</div>
+    <section className="success-page">
+      <div className="success-card">
+        <FaCheckCircle className="success-icon" />
 
-      <h1>Đặt hàng thành công!</h1>
+        <h1>Order Successful!</h1>
 
-      <p>Mã đơn hàng: #{order.id}</p>
+        <p>
+          Thank you for shopping with us.
+          <br />
+          Your order has been placed successfully.
+        </p>
 
-      <h3>Tổng tiền: ${order.total.toFixed(2)}</h3>
-
-      <p>Cảm ơn bạn đã mua hàng.</p>
-
-      <button onClick={onContinue}>Tiếp tục mua</button>
-    </div>
+        <button onClick={() => navigate("/products")}>Continue Shopping</button>
+      </div>
+    </section>
   );
 }

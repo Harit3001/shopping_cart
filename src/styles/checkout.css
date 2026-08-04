@@ -1,0 +1,196 @@
+/* =========================================================
+   CHECKOUT PAGE
+========================================================= */
+
+.checkout-page {
+  max-width: 1240px;
+  margin: 60px auto;
+  padding: 0 32px 80px;
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 2fr 420px;
+  gap: 40px;
+  align-items: start;
+}
+
+/* =========================================================
+   LEFT
+========================================================= */
+
+.checkout-form {
+  background: #fff;
+  border-radius: 20px;
+  padding: 35px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-form h1 {
+  margin-bottom: 30px;
+  font-size: 34px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+
+  padding: 15px 18px;
+
+  border: 1px solid #ddd;
+  border-radius: 12px;
+
+  font-size: 16px;
+
+  transition: 0.25s;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.error {
+  margin-top: 6px;
+  color: #ef4444;
+  font-size: 13px;
+}
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.checkout-summary {
+  position: sticky;
+  top: 100px;
+
+  background: #fff;
+
+  border-radius: 20px;
+
+  padding: 30px;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-summary h2 {
+  margin-bottom: 25px;
+}
+
+/* =========================================================
+   PRODUCT
+========================================================= */
+
+.summary-item {
+  display: grid;
+  grid-template-columns: 70px 1fr auto;
+
+  gap: 15px;
+
+  align-items: center;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid #eee;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-item img {
+  width: 70px;
+  height: 70px;
+
+  object-fit: contain;
+}
+
+.summary-item h4 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.summary-item p {
+  color: #777;
+  font-size: 14px;
+}
+
+.summary-item strong {
+  color: #ff6b35;
+}
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+
+  margin: 25px 0;
+
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.checkout-summary button {
+  width: 100%;
+  height: 55px;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 17px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.25s;
+}
+
+.checkout-summary button[type="submit"] {
+  background: #0f172a;
+  color: white;
+}
+
+.checkout-summary button[type="submit"]:hover {
+  background: #2563eb;
+}
+
+.cancel-btn {
+  margin-top: 15px;
+
+  background: white;
+  color: #111;
+
+  border: 1px solid #ddd !important;
+}
+
+.cancel-btn:hover {
+  background: #f3f4f6;
+}

@@ -1,106 +1,26 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import CheckOut from "../components/CheckOut";
 
-export default function CheckOutPage({ totalPrice, onSubmit, onCancel }) {
-  const [errors, setErrors] = useState({});
+export default function CheckOutPage() {
+  const navigate = useNavigate();
 
-  function validate(form) {
-    const newErrors = {};
+  const { cart, totalPrice, clearCart } = useCart();
 
-    const name = form.name.value.trim();
-    const phone = form.phone.value.trim();
-    const email = form.email.value.trim();
-    const address = form.address.value.trim();
+  function handleSubmit(customer) {
+    console.log(customer);
 
-    if (name.length < 2) {
-      newErrors.name = "Họ tên phải có ít nhất 2 ký tự.";
-    }
+    clearCart();
 
-    if (!/^0\d{9}$/.test(phone)) {
-      newErrors.phone = "Số điện thoại phải gồm 10 số và bắt đầu bằng 0.";
-    }
-
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-      newErrors.email = "Email không đúng định dạng.";
-    }
-
-    if (address.length < 5) {
-      newErrors.address = "Địa chỉ quá ngắn.";
-    }
-
-    return newErrors;
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    const errors = validate(e.target);
-
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
-
-    setErrors({});
-
-    const customer = {
-      name: e.target.name.value,
-      phone: e.target.phone.value,
-      email: e.target.email.value,
-      address: e.target.address.value,
-      note: e.target.note.value,
-    };
-
-    onSubmit(customer);
+    navigate("/success");
   }
 
   return (
-    <div className="checkout-overlay">
-      <div className="checkout-container">
-        <h2>Thông tin đặt hàng</h2>
-
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Họ tên</label>
-            <input type="text" name="name" />
-            {errors.name && <span className="error">{errors.name}</span>}
-          </div>
-
-          <div className="form-group">
-            <label>Số điện thoại</label>
-            <input type="text" name="phone" />
-            {errors.phone && <span className="error">{errors.phone}</span>}
-          </div>
-
-          <div className="form-group">
-            <label>Email</label>
-            <input type="text" name="email" />
-            {errors.email && <span className="error">{errors.email}</span>}
-          </div>
-
-          <div className="form-group">
-            <label>Địa chỉ</label>
-            <input type="text" name="address" />
-            {errors.address && <span className="error">{errors.address}</span>}
-          </div>
-
-          <div className="form-group">
-            <label>Ghi chú</label>
-            <input type="text" name="note" />
-          </div>
-
-          <div className="checkout-total">
-            Tổng tiền: ${totalPrice.toFixed(2)}
-          </div>
-
-          <div className="checkout-actions">
-            <button type="submit">Xác nhận đặt hàng</button>
-
-            <button type="button" onClick={onCancel}>
-              Hủy
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <CheckOut
+      cart={cart}
+      totalPrice={totalPrice}
+      onSubmit={handleSubmit}
+      onCancel={() => navigate("/cart")}
+    />
   );
 }
